@@ -58,7 +58,7 @@ class tx_saveDce {
 		$this->extConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['dce']);
 		$this->tcemain = $pObj;
 		$this->fieldArray = $fieldArray;
-		$this->uid = $this->getUid($id, $status, $pObj);
+		$this->uid = $this->getUid($id, $table, $status, $pObj);
 
 		if ($table === 'tt_content' && $this->isDceContentElement($pObj)) {
 			$this->checkAndUpdateDceRelationField();
@@ -227,7 +227,7 @@ class tx_saveDce {
 	 *
 	 * @return integer
 	 */
-	protected function getUid($id, $status, $pObj) {
+	protected function getUid($id, $table, $status, $pObj) {
 		$uid = $id;
 		if ($status === 'new') {
 			if (!$pObj->substNEWwithIDs[$id]) {
@@ -236,6 +236,9 @@ class tx_saveDce {
 			} else {
 				//afterDatabaseOperations
 				$uid = $pObj->substNEWwithIDs[$id];
+				if (isset($pObj->autoVersionIdMap[$table][$uid])) {
+					$uid = $pObj->autoVersionIdMap[$table][$uid];
+				}
 			}
 		}
 		return intval($uid);
