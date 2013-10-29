@@ -22,7 +22,7 @@ function initCodeMirrorEditor(textarea, mode) {
 	);
 
 		// Set width of codemirror to avoid frame scrollbars
-	var windowWidth = $$('#typo3-inner-docbody > h2')[0].getWidth();
+	var windowWidth = $$('#typo3-inner-docbody > h1')[0].getWidth();
 	var wrapper = editor.getWrapperElement();
 
 	var widthPuffer = 40;
